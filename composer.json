@@ -1,0 +1,27 @@
+{
+    "name": "rumenx/php-calendar",
+    "description": "A PHP library to generate .ics files for custom events and meetings (Gmail, iCloud, etc).",
+    "require": {
+        "php": "^8.3 || ^8.4"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Rumen Damyanov",
+            "email": "contact@rumenx.com"
+        }
+    ],
+    "require-dev": {
+        "pestphp/pest": "^2.0"
+    },
+    "config": {
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Rumenx\\": "src/"
+        }
+    }
+}

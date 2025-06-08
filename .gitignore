@@ -1,0 +1,38 @@
+# Composer dependencies
+/vendor/
+
+# Composer files
+composer.lock
+
+# PHPUnit / Pest cache
+.phpunit.result.cache
+.pest*
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# IDE and editor folders
+.idea/
+.vscode/
+*.sublime-workspace
+*.sublime-project
+
+# Logs
+*.log
+
+# Coverage reports
+coverage/
+
+# Build artifacts
+dist/
+build/
+
+# User-specific files
+.env
+.env.*
+
+# Misc
+*.swp
+*.bak
+*.tmp
