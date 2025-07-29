@@ -8,25 +8,15 @@
          failOnSkipped="true"
          testdox="false">
     <testsuites>
-        <testsuite name="Unit">
-            <directory>./tests/Unit</directory>
-        </testsuite>
-        <testsuite name="Feature">
-            <directory>./tests/Feature</directory>
-        </testsuite>
-        <testsuite name="Default">
+        <testsuite name="Tests">
             <directory>./tests</directory>
         </testsuite>
     </testsuites>
-    <coverage processUncoveredFiles="true">
+    <source>
         <include>
             <directory suffix=".php">src</directory>
         </include>
-    </coverage>
-    <logging>
-        <log type="coverage-html" target="coverage/"/>
-        <log type="coverage-text" target="coverage/coverage.txt"/>
-    </logging>
+    </source>
     <php>
         <env name="APP_ENV" value="testing"/>
     </php>

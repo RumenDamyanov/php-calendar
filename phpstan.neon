@@ -1,0 +1,25 @@
+includes:
+    - vendor/phpstan/phpstan-strict-rules/rules.neon
+
+parameters:
+    level: max
+    paths:
+        - src
+        - tests
+    excludePaths:
+        - tests/Feature/LaravelServiceProviderStub.php
+        - tests/Feature/SymfonyBundleStub.php
+        - src/Laravel/CalendarServiceProvider.php
+        - src/Symfony/CalendarBundle.php
+    ignoreErrors:
+        - '#Call to an undefined method#'
+        - '#Access to an undefined property#'
+        - '#Class .* does not have a constructor and must be instantiated without any parameters#'
+        - '#Parameter .* expects class-string, string given#'
+        - '#has no return type specified#'
+        - '#has parameter .* with no type specified#'
+        -
+            identifier: missingType.iterableValue
+        -
+            identifier: missingType.generics
+    reportUnmatchedIgnoredErrors: false
