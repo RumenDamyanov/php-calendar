@@ -8,6 +8,10 @@ composer.lock
 .phpunit.result.cache
 .pest*
 
+# Code quality tools cache
+.phpcs-cache
+.php-cs-fixer.cache
+
 # OS generated files
 .DS_Store
 Thumbs.db

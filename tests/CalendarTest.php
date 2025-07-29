@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Calendar Test
  *
@@ -15,7 +16,7 @@ describe('Calendar', function () {
             'start' => '2025-06-10 10:00:00',
             'end' => '2025-06-10 11:00:00',
             'location' => 'HQ',
-            'description' => 'Unit test event.'
+            'description' => 'Unit test event.',
         ]);
         $ics = $calendar->toIcs();
         expect($ics)->toContain('BEGIN:VEVENT');
@@ -71,8 +72,53 @@ describe('Calendar', function () {
         expect($ics)->toContain('END:VALARM');
     });
 
+    it('can add an alarm with default values', function () {
+        $calendar = new \Rumenx\Calendar();
+        $calendar->addEvent([
+            'summary' => 'Meeting with defaults',
+            'start' => '2025-06-21 10:00:00',
+            'end' => '2025-06-21 11:00:00',
+            'alarm' => [], // Empty alarm array to trigger defaults
+        ]);
+        $ics = $calendar->toIcs();
+        expect($ics)->toContain('BEGIN:VALARM');
+        expect($ics)->toContain('TRIGGER:-PT15M'); // Default trigger
+        expect($ics)->toContain('DESCRIPTION:Reminder'); // Default description
+        expect($ics)->toContain('END:VALARM');
+    });
+
+    it('can add an alarm with partial values (missing trigger)', function () {
+        $calendar = new \Rumenx\Calendar();
+        $calendar->addEvent([
+            'summary' => 'Meeting with partial alarm',
+            'start' => '2025-06-22 14:00:00',
+            'end' => '2025-06-22 15:00:00',
+            'alarm' => [
+                'description' => 'Custom reminder text',
+            ],
+        ]);
+        $ics = $calendar->toIcs();
+        expect($ics)->toContain('TRIGGER:-PT15M'); // Default trigger
+        expect($ics)->toContain('DESCRIPTION:Custom reminder text');
+    });
+
+    it('can add an alarm with partial values (missing description)', function () {
+        $calendar = new \Rumenx\Calendar();
+        $calendar->addEvent([
+            'summary' => 'Meeting with partial alarm',
+            'start' => '2025-06-22 16:00:00',
+            'end' => '2025-06-22 17:00:00',
+            'alarm' => [
+                'trigger' => '-PT30M',
+            ],
+        ]);
+        $ics = $calendar->toIcs();
+        expect($ics)->toContain('TRIGGER:-PT30M');
+        expect($ics)->toContain('DESCRIPTION:Reminder'); // Default description
+    });
+
     it('throws if required fields are missing', function () {
         $calendar = new \Rumenx\Calendar();
-        expect(fn() => $calendar->addEvent(['summary' => 'No dates']))->toThrow(\InvalidArgumentException::class);
+        expect(fn () => $calendar->addEvent(['summary' => 'No dates']))->toThrow(\InvalidArgumentException::class);
     });
 });

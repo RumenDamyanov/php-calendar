@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Calendar
  *
@@ -22,7 +23,7 @@ class Calendar implements CalendarInterface
     public function addEvent(array $event): void
     {
         // Basic validation for required fields
-        if (!isset($event['summary'], $event['start'], $event['end'])) {
+        if (! isset($event['summary'], $event['start'], $event['end'])) {
             throw new \InvalidArgumentException('Event must have summary, start, and end.');
         }
         $this->events[] = $event;
@@ -38,6 +39,7 @@ class Calendar implements CalendarInterface
             $ics .= $this->formatEvent($event);
         }
         $ics .= "END:VCALENDAR\r\n";
+
         return $ics;
     }
 
@@ -61,10 +63,10 @@ class Calendar implements CalendarInterface
         $vevent .= "DTSTART:$dtStart\r\n";
         $vevent .= "DTEND:$dtEnd\r\n";
         $vevent .= "SUMMARY:$summary\r\n";
-        if ($location) {
+        if ($location !== '') {
             $vevent .= "LOCATION:$location\r\n";
         }
-        if ($description) {
+        if ($description !== '') {
             $vevent .= "DESCRIPTION:$description\r\n";
         }
         // Add RRULE for recurrence
@@ -79,8 +81,12 @@ class Calendar implements CalendarInterface
         }
         // Add alarm (VALARM block)
         if (isset($event['alarm']) && is_array($event['alarm'])) {
-            $trigger = isset($event['alarm']['trigger']) ? $this->escape($event['alarm']['trigger']) : '-PT15M';
-            $alarmDesc = isset($event['alarm']['description']) ? $this->escape($event['alarm']['description']) : 'Reminder';
+            $trigger = isset($event['alarm']['trigger'])
+                ? $this->escape($event['alarm']['trigger'])
+                : '-PT15M';
+            $alarmDesc = isset($event['alarm']['description'])
+                ? $this->escape($event['alarm']['description'])
+                : 'Reminder';
             $vevent .= "BEGIN:VALARM\r\n";
             $vevent .= "TRIGGER:$trigger\r\n";
             $vevent .= "ACTION:DISPLAY\r\n";
@@ -88,6 +94,7 @@ class Calendar implements CalendarInterface
             $vevent .= "END:VALARM\r\n";
         }
         $vevent .= "END:VEVENT\r\n";
+
         return $vevent;
     }
 
@@ -100,6 +107,7 @@ class Calendar implements CalendarInterface
     protected function formatDate(string $date): string
     {
         $dt = new \DateTime($date, new \DateTimeZone('UTC'));
+
         return $dt->format('Ymd\THis\Z');
     }
 
@@ -113,6 +121,7 @@ class Calendar implements CalendarInterface
     {
         // Escape only characters required by RFC 5545: backslash, comma, semicolon, and newlines
         $text = str_replace(['\\', ';', ',', "\n", "\r"], ['\\\\', '\\;', '\\,', '\\n', ''], $text);
+
         return $text;
     }
 }
