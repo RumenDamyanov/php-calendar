@@ -1,16 +1,29 @@
 {
     "name": "rumenx/php-calendar",
-    "description": "A PHP library to generate .ics files for custom events and meetings (Gmail, iCloud, etc).",
-    "require": {
-        "php": ">=8.3"
-    },
+    "description": "A simple, framework-agnostic PHP package for generating RFC 5545-compliant .ics calendar files. Built with the philosophy that calendar generation should be straightforward, reliable, and work everywhere.",
     "license": "MIT",
     "authors": [
         {
             "name": "Rumen Damyanov",
-            "email": "contact@rumenx.com"
+            "email": "contact@rumenx.com",
+            "role": "Developer",
+            "homepage": "https://rumenx.com"
         }
     ],
+    "support": {
+        "issues": "https://github.com/RumenDamyanov/php-calendar/issues",
+        "source": "https://github.com/RumenDamyanov/php-calendar",
+        "wiki": "https://github.com/RumenDamyanov/php-calendar/wiki"
+    },
+    "funding": [
+        {
+            "type": "github",
+            "url": "https://github.com/sponsors/RumenDamyanov"
+        }
+    ],
+    "require": {
+        "php": "^8.2"
+    },
     "require-dev": {
         "pestphp/pest": "^4.0",
         "phpstan/phpstan": "^1.10",
