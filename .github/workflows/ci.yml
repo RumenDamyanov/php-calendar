@@ -9,27 +9,63 @@ on:
     branches: [ master, develop ]
 
 jobs:
-  build:
+  test:
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
-        php-version: [8.2, 8.3, 8.4]
+        php-version: ['8.3', '8.4', '8.5']
     steps:
       - uses: actions/checkout@v7
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php-version }}
-          coverage: xdebug
+          coverage: ${{ matrix.php-version == '8.4' && 'xdebug' || 'none' }}
       - name: Install dependencies
-        run: composer install --prefer-dist --no-progress --no-suggest
+        run: composer update --prefer-dist --no-interaction --no-progress
       - name: Run tests
-        run: ./vendor/bin/pest --coverage --coverage-clover=coverage.xml
-      - name: Debug coverage output
-        run: ls -l coverage || true
+        if: matrix.php-version != '8.4'
+        run: vendor/bin/pest --no-coverage
+      - name: Run tests with coverage
+        if: matrix.php-version == '8.4'
+        run: vendor/bin/pest --coverage --coverage-clover=coverage.xml --min=100
       - name: Upload coverage to Codecov
+        if: matrix.php-version == '8.4'
         uses: codecov/codecov-action@v7
         with:
-          files: ./coverage.xml
+          files: coverage.xml
           token: ${{ secrets.CODECOV_TOKEN }}
           fail_ci_if_error: false
+
+  analyze:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        php-version: ['8.3']
+    steps:
+      - uses: actions/checkout@v7
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php-version }}
+      - name: Install dependencies
+        run: composer update --prefer-dist --no-interaction --no-progress
+      - name: Run static analysis
+        run: vendor/bin/phpstan analyse --no-progress
+
+  style:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        php-version: ['8.3']
+    steps:
+      - uses: actions/checkout@v7
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php-version }}
+      - name: Install dependencies
+        run: composer update --prefer-dist --no-interaction --no-progress
+      - name: Run style check
+        run: vendor/bin/phpcs

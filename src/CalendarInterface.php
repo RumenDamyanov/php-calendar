@@ -8,6 +8,8 @@
  * @package Rumenx\php-calendar
  */
 
+declare(strict_types=1);
+
 namespace Rumenx;
 
 interface CalendarInterface
@@ -15,7 +17,8 @@ interface CalendarInterface
     /**
      * Add an event to the calendar.
      *
-     * @param array $event Associative array with keys: summary, start, end, location, description, etc.
+     * @param array<string, mixed> $event Event fields: summary, start, end,
+     *        and optional location, description, url, rrule, organizer, attendees, alarm.
      * @return void
      */
     public function addEvent(array $event): void;

@@ -7,10 +7,10 @@ parameters:
         - src
         - tests
     excludePaths:
-        - tests/Feature/LaravelServiceProviderStub.php
-        - tests/Feature/SymfonyBundleStub.php
-        - src/Laravel/CalendarServiceProvider.php
-        - src/Symfony/CalendarBundle.php
+        - tests/Feature/LaravelServiceProviderStub.php (?)
+        - tests/Feature/SymfonyBundleStub.php (?)
+        - src/Laravel/CalendarServiceProvider.php (?)
+        - src/Symfony/CalendarBundle.php (?)
     ignoreErrors:
         - '#Call to an undefined method#'
         - '#Access to an undefined property#'

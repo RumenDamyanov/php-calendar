@@ -19,9 +19,13 @@ Key principles:
 
 ## Installation
 
+Requires **PHP 8.3** or newer.
+
 ```bash
 composer require rumenx/php-calendar
 ```
+
+Text values are escaped for RFC 5545. A comma, semicolon, backslash, or newline in a summary, location, or description stays inside that field. Recurrence rules, addresses, and URLs reject control characters instead of being rewritten. `url` and `organizer` are written into the calendar. An email address without a `mailto:` prefix gets one.
 
 ## Quick Start
 
