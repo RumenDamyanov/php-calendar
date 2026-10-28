@@ -27,6 +27,8 @@ Thumbs.db
 
 # Coverage reports
 coverage/
+coverage.xml
+phpunit.xml.bak
 
 # Build artifacts
 dist/
